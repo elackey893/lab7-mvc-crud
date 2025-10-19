@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lab 7: MVC Chat with CRUD</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<chat-widget>
+    <header class="chat-header">
+        <h1>Chat Assistant</h1>
+        <p>MVC + CRUD Version</p>
+    </header>
+    <chat-window id="chatWindow">
+        <!-- Messages added dynamically via JS -->
+    </chat-window>
+    <form id="chatForm">
+        <input type="text" placeholder="Type a message" id="messageBox" autocomplete="off" />
+        <button id="sendBtn" type="submit">Send</button>
+    </form>
+    <section class="chat-controls">
+        <button id="clearBtn">Clear Chat</button>
+        <button id="exportBtn">Export JSON</button>
+        <button id="importBtn">Import JSON</button>
+        <span -d="stats">Messages: = | Last Saved: Never</span>
+    </section>
+"
+    <footer class="chat-footer">
+        <span>💡 MVC + CRUD with localStorage persistence.</span>
+    </footer>
+</chat-widget>
+<script type="module" src="js/app.js"></script>
+</body>
+</html>
