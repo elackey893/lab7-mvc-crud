@@ -106,6 +106,50 @@ button:hover {
     background: #ccc;
 }
 
+.chat-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5em 1em;
+    background: #fff;
+    border-top: 1px solid #ccc;
+    gap: 0.5rem;
+}
+
+.chat-controls button {
+    padding: 0.5rem 1rem;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    background: #f0f0f0;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: background 0.2s;
+}
+
+.chat-controls button:hover {
+    background: #e0e0e0;
+}
+
+.export-btn, .import-btn {
+    color: #666;
+}
+
+.clear-btn {
+    background: red;
+    color: white;
+    border: red;
+}
+
+.clear-btn:hover {
+    background: indianred;
+}
+
+#stats {
+    font-size: 0.8rem;
+    color: #666;
+    font-weight: 500;
+}
+
 .chat-footer {
     background: #fff8e1;
     padding: 0.5rem;
