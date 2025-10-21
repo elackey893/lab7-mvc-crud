@@ -11,6 +11,15 @@ export class Controller {
         document.addEventListener('messagesChanged', () => this.loadChat());
 
         this.view.chatForm.addEventListener('submit', (e) => this.handleSend(e));
+
+        this.view.clearBtn.addEventListener('click', () => this.handleClear());
+        this.view.exportBtn.addEventListener('click', () => this.handleExport());
+        this.view.importBtn.addEventListener('click', () => this.handleImport());
+
+        this.view.chatWindow.addEventListener('click', (e) => {
+            if (e.target.matches('.edit-btn')) this.handleEdit(e);
+            if (e.target.matches('.delete-btn')) this.handleDelete(e);
+        });
     }
 
     loadChat() {
@@ -60,5 +69,21 @@ export class Controller {
 
         this.model.clearChat();
         this.loadChat();
+    }
+
+    handleExport() {
+        const data = this.model.exportJSON();
+        this.view.downloadJSON('chat-history.json', data);
+    }
+
+    handleImport() {
+        this.view.getFileContent((data) => {
+            if (this.model.importJSON(data)) {
+                alert('chat imported successfully!');
+                this.loadChat();
+            } else {
+                alert('Invalid JSON file.');
+            }
+        });
     }
 }
