@@ -34,4 +34,24 @@ export class Controller {
 
         this.loadChat();
     }
+
+    handleEdit(e) {
+        const id = this.view.getMessageIdForEvent(e);
+        const mesg = this.model.getMessage(id);
+        if (!msg) return;
+
+        const newText = prompt('Edit message', msg.text);
+        if (newtext !== null && newText.trim() !== msg.text) {
+            this.model.updateMessage(id, newText.trim());
+            this.loadChat();
+        }
+    }
+
+    handleDelete(e) {
+        const id = this.view.getMessageIdForEvent(e);
+        if (!this.view.showConfirmation('Delete this message?')) return;
+
+        this.model.deleteMessage(id);
+        this.loadChat();
+    }
 }
