@@ -54,4 +54,11 @@ export class Controller {
         this.model.deleteMessage(id);
         this.loadChat();
     }
+
+    handleClear() {
+        if (!this.view.showConfirmation('Clear this message?')) return;
+
+        this.model.clearChat();
+        this.loadChat();
+    }
 }
