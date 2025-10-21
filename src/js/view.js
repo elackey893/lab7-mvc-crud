@@ -1,4 +1,5 @@
-export class view {
+// view.js - Renders UI (messages, stats, controls) - no data logic
+export class View {  // Fixed: Added export, capitalized 'View'
     constructor() {
         this.chatWindow = document.getElementById('chatWindow');
         this.messageBox = document.getElementById('messageBox');
@@ -10,6 +11,7 @@ export class view {
     }
 
     renderMessages(messages) {
+        if (!this.chatWindow) return;  // Fixed: Null check
         this.chatWindow.innerHTML = '';
         messages.forEach((msg) => {
             const p = document.createElement('p');
@@ -28,7 +30,7 @@ export class view {
                 deleteBtn.className = 'delete-btn';
                 deleteBtn.textContent = 'Delete';
                 deleteBtn.dataset.messageId = msg.id;
-                p.appendChild(editBtn);
+                p.appendChild(deleteBtn);  // Fixed: append deleteBtn, not editBtn
             }
 
             this.chatWindow.appendChild(p);
@@ -37,6 +39,7 @@ export class view {
     }
 
     updateStats(stats) {
+        if (!this.stats) return;  // Null check
         this.stats.textContent = `Messages: ${stats.count} | Last Saved: ${stats.lastSaved}`;
     }
 

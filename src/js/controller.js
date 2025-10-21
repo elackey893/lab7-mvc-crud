@@ -1,12 +1,13 @@
+import { getBotResponse } from './eliza.js';
+
 export class Controller {
-    contructor(mode, view) {
-        this.model = model;
+    constructor(model, view) {  // Fixed: 'mode' -> 'model'
+        this.model = model;  // Fixed: references correct param
         this.view = view;
     }
 
-
     init() {
-        this.loadChat()
+        this.loadChat();
 
         document.addEventListener('messagesChanged', () => this.loadChat());
 
@@ -38,7 +39,7 @@ export class Controller {
 
         this.model.addMessage(message, true);
 
-        const botReply = getBotResponse(message);
+        const botReply = getBotResponse(message);  // Now imported
         this.model.addMessage(botReply, false);
 
         this.loadChat();
@@ -46,11 +47,11 @@ export class Controller {
 
     handleEdit(e) {
         const id = this.view.getMessageIdForEvent(e);
-        const mesg = this.model.getMessage(id);
+        const msg = this.model.getMessage(id);
         if (!msg) return;
 
         const newText = prompt('Edit message', msg.text);
-        if (newtext !== null && newText.trim() !== msg.text) {
+        if (newText !== null && newText.trim() !== msg.text) {
             this.model.updateMessage(id, newText.trim());
             this.loadChat();
         }
@@ -65,7 +66,7 @@ export class Controller {
     }
 
     handleClear() {
-        if (!this.view.showConfirmation('Clear this message?')) return;
+        if (!this.view.showConfirmation('Clear all messages?')) return;  // Fixed: "all messages"
 
         this.model.clearChat();
         this.loadChat();
@@ -79,7 +80,7 @@ export class Controller {
     handleImport() {
         this.view.getFileContent((data) => {
             if (this.model.importJSON(data)) {
-                alert('chat imported successfully!');
+                alert('Chat imported successfully!');  // Fixed: Capitalized
                 this.loadChat();
             } else {
                 alert('Invalid JSON file.');
