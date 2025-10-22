@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lab 7: MVC Chat with CRUD</title>
     <link rel="stylesheet" href="style.css">
 </head>
@@ -12,6 +12,9 @@
         <h1>Chat Assistant</h1>
         <p>MVC + CRUD Version</p>
     </header>
+    <section class="stats-section">
+        <span id="stats">Messages: 0 | Last Saved: Never</span>
+    </section>
     <chat-window id="chatWindow">
         <!-- Messages added dynamically via JS -->
     </chat-window>
@@ -20,12 +23,10 @@
         <button id="sendBtn" type="submit">Send</button>
     </form>
     <section class="chat-controls">
-        <button id="clearBtn">Clear Chat</button>
-        <button id="exportBtn">Export JSON</button>
-        <button id="importBtn">Import JSON</button>
-        <span id="stats">Messages: = | Last Saved: Never</span>
+        <button id="clearBtn" class="clear-btn">Clear Chat</button>
+        <button id="exportBtn" class="export-btn">Export JSON</button>
+        <button id="importBtn" class="import-btn">Import JSON</button>
     </section>
-
     <footer class="chat-footer">
         <span>💡 MVC + CRUD with localStorage persistence.</span>
     </footer>
