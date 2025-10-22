@@ -1,3 +1,4 @@
+/* ----- Page Setup ----- */
 body {
     display: flex;
     justify-content: center;
@@ -18,6 +19,7 @@ chat-widget {
     overflow: hidden;
 }
 
+/* ----- Header ----- */
 .chat-header {
     background: #4a90e2;
     color: white;
@@ -40,6 +42,7 @@ chat-widget {
     opacity: 0.9;
 }
 
+/* ----- Chat Window ----- */
 chat-window {
     display: flex;
     flex-direction: column;
@@ -79,6 +82,7 @@ chat-window p.Bot {
     border-radius: 24px 24px 24px 0;
 }
 
+/* ----- Form ----- */
 #chatForm {
     display: flex;
     padding: 0.5em;
@@ -106,11 +110,12 @@ button:hover {
     background: #ccc;
 }
 
+/* ----- Chat Controls ----- */
 .chat-controls {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0.5em 1em;
+    padding: 0.5em 1rem;
     background: #fff;
     border-top: 1px solid #ccc;
     gap: 0.5rem;
@@ -135,13 +140,13 @@ button:hover {
 }
 
 .clear-btn {
-    background: red;
+    background: #ff6b6b;
     color: white;
-    border: red;
+    border-color: #ff6b6b;
 }
 
 .clear-btn:hover {
-    background: indianred;
+    background: #ff5252;
 }
 
 #stats {
@@ -150,6 +155,28 @@ button:hover {
     font-weight: 500;
 }
 
+/* ----- Message Buttons (Edit/Delete) ----- */
+.edit-btn, .delete-btn {
+    margin-left: 0.5rem;
+    padding: 0.25rem 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background: #f0f0f0;
+    font-size: 0.8rem;
+    cursor: pointer;
+}
+
+.delete-btn {
+    background: #ff6b6b; /* Red for delete */
+    color: white;
+    border-color: #ff6b6b;
+}
+
+.delete-btn:hover {
+    background: #ff5252;
+}
+
+/* ----- Footer ----- */
 .chat-footer {
     background: #fff8e1;
     padding: 0.5rem;
