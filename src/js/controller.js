@@ -1,9 +1,12 @@
+// controller.js - Handles input, coordinates Model/View - no DOM or data direct
 import { getBotResponse } from './eliza.js';
+import { DeepSeekService } from './ai-service.js';
 
 export class Controller {
-    constructor(model, view) {  // Fixed: 'mode' -> 'model'
-        this.model = model;  // Fixed: references correct param
-        this.view = view;
+    constructor(model, view) {
+        this.model = model; // Data layer
+        this.view = view; // UI layer
+        this.currentMode = 'eliza'; // Default
     }
 
     init() {
@@ -13,20 +16,32 @@ export class Controller {
 
         this.view.chatForm.addEventListener('submit', (e) => this.handleSend(e));
 
+        // Controls listeners
         this.view.clearBtn.addEventListener('click', () => this.handleClear());
         this.view.exportBtn.addEventListener('click', () => this.handleExport());
         this.view.importBtn.addEventListener('click', () => this.handleImport());
 
+        // Delegation for dynamic edit/delete buttons
         this.view.chatWindow.addEventListener('click', (e) => {
             if (e.target.matches('.edit-btn')) this.handleEdit(e);
             if (e.target.matches('.delete-btn')) this.handleDelete(e);
+        });
+
+        // AI Mode Toggle
+        const aiMode = document.getElementById('aiMode');
+        aiMode.addEventListener('change', (e) => {
+            this.currentMode = e.target.value;
+            this.loadChat(); // Reload if needed
+            const stats = this.model.getStats();
+            this.view.updateStats({ ...stats, mode: this.currentMode.toUpperCase() });
         });
     }
 
     loadChat() {
         const messages = this.model.getMessages();
         this.view.renderMessages(messages);
-        this.view.updateStats(this.model.getStats());
+        const stats = this.model.getStats();
+        this.view.updateStats({ ...stats, mode: this.currentMode.toUpperCase() });
     }
 
     handleSend(e) {
@@ -39,7 +54,13 @@ export class Controller {
 
         this.model.addMessage(message, true);
 
-        const botReply = getBotResponse(message);  // Now imported
+        let botReply;
+        if (this.currentMode === 'deepseek') {
+            const deepSeekService = new DeepSeekService();
+            botReply = await deepSeekService.getResponse(message);
+        } else {
+            botReply = getBotResponse(message); // Eliza fallback
+        }
         this.model.addMessage(botReply, false);
 
         this.loadChat();
@@ -66,7 +87,7 @@ export class Controller {
     }
 
     handleClear() {
-        if (!this.view.showConfirmation('Clear all messages?')) return;  // Fixed: "all messages"
+        if (!this.view.showConfirmation('Clear all messages?')) return;
 
         this.model.clearChat();
         this.loadChat();
@@ -80,7 +101,7 @@ export class Controller {
     handleImport() {
         this.view.getFileContent((data) => {
             if (this.model.importJSON(data)) {
-                alert('Chat imported successfully!');  // Fixed: Capitalized
+                alert('Chat imported successfully!');
                 this.loadChat();
             } else {
                 alert('Invalid JSON file.');
