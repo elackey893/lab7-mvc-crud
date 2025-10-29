@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lab 7: MVC Chat with CRUD</title>
-    <link rel="stylesheet" href="src/style.css">
+    <title>Lab 9: MVC Chat with AI integration</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 <chat-widget>
@@ -12,8 +12,15 @@
         <h1>Chat Assistant</h1>
         <p>MVC + CRUD Version</p>
     </header>
+    <section class="mode-toggle">
+        <label for="aiMode">AI Mode: </label>
+        <select id="aiMode">
+            <option value="eliza">Eliza (Local)</option>
+            <option value="deepseek">DeepSeek (Cloud)</option>
+        </select>
+    </section>
     <section class="stats-section">
-        <span id="stats">Messages: 0 | Last Saved: Never</span>
+        <span id="stats">Messages: 0 | Last Saved: Never | Mode: Eliza</span>
     </section>
     <chat-window id="chatWindow">
         <!-- Messages added dynamically via JS -->
@@ -31,6 +38,6 @@
         <span>💡 MVC + CRUD with localStorage persistence.</span>
     </footer>
 </chat-widget>
-<script type="module" src="src/js/app.js"></script>
+<script type="module" src="app.js"></script>
 </body>
 </html>
