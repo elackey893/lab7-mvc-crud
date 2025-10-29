@@ -44,7 +44,7 @@ export class Controller {
         this.view.updateStats({ ...stats, mode: this.currentMode.toUpperCase() });
     }
 
-    handleSend(e) {
+    async handleSend(e) {  // Fixed: Added 'async' for await
         e.preventDefault();
         const message = this.view.messageBox.value.trim();
         if (!message) return;
@@ -57,7 +57,7 @@ export class Controller {
         let botReply;
         if (this.currentMode === 'deepseek') {
             const deepSeekService = new DeepSeekService();
-            botReply = await deepSeekService.getResponse(message);
+            botReply = await deepSeekService.getResponse(message);  // Now awaits safely
         } else {
             botReply = getBotResponse(message); // Eliza fallback
         }
