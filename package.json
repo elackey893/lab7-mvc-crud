@@ -1,0 +1,39 @@
+{
+  "name": "lab8-ai-services",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test:ui": "playwright test --ui",
+    "name": "lab8-ai-services",
+    "version": "1.0.0",
+    "type": "module",
+    "start": "http-server . -p 3000 -c-1",
+    "test": "playwright test",
+    "test:headed": "playwright test --headed"
+    },
+
+  "devDependencies": {
+    "@playwright/test": "^1.47.0",
+    "http-server": "^14.1.1"
+  },
+
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/elackey893/lab7-mvc-crud.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/elackey893/lab7-mvc-crud/issues"
+  },
+  "homepage": "https://github.com/elackey893/lab7-mvc-crud#readme"
+
+
+}
+
