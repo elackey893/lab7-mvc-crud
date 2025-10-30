@@ -1,7 +1,14 @@
-// ai-service.js - DeepSeek Service (Lab 8 - Cloud AI)
-// Handles OpenRouter DeepSeek v3.1 - Prompt for key on init
+/**
+ * DeepSeek Service module for cloud AI integration via OpenRouter API.
+ * Prompts for API key on init, falls back to Eliza on errors.
+ * @module ai-service
+ */
 
 export class DeepSeekService {
+    /**
+     * Constructor retrieves or prompts for API key, saves to localStorage.
+     * Sets getResponse fallback if no key.
+     */
     constructor() {
         this.key = localStorage.getItem('deepseekkey') || prompt('Enter OpenRouter API key for DeepSeek:');
         if (!this.key) {
@@ -12,6 +19,11 @@ export class DeepSeekService {
         }
     }
 
+    /**
+     * Gets AI response via API POST request.
+     * @param {string} message - User message.
+     * @returns {Promise<string>} Bot response or error message.
+     */
     async getResponse(message) {
         if (!this.key) return 'No key - use Eliza';
         const endpoint = 'https://openrouter.ai/api/v1/chat/completions';

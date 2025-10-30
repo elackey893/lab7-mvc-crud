@@ -1,3 +1,9 @@
+/**
+ * Bootstrap file for the MVC Chat Application.
+ * Initializes Model, View, and Controller instances on DOM load.
+ * @module app
+ */
+
 import { Model } from './model.js';
 import { View } from './view.js';
 import { Controller } from './controller.js';

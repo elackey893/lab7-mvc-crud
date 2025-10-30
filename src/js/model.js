@@ -1,10 +1,21 @@
-// model.js - Manages chat data, CRUD, and localStorage
+/**
+ * Model module for managing chat data, CRUD operations, and localStorage persistence.
+ * Handles messages as an array of objects with id, text, isUser, timestamp, edited properties.
+ * @module model
+ */
+
 export class Model {
+    /**
+     * Constructor initializes empty messages array and lastSaved timestamp.
+     */
     constructor() {
         this.messages = [];  // Fixed: plural to match methods
         this.lastSaved = 'Never';
     }
 
+    /**
+     * Saves messages and lastSaved to localStorage.
+     */
     saveToStorage() {
         try {
             localStorage.setItem('chatHistory', JSON.stringify(this.messages));  // Fixed: plural
@@ -14,7 +25,13 @@ export class Model {
         }
     }
 
-    // CREATE feature which adds the new message
+    /**
+     * CREATE: Adds a new message object and saves to storage.
+     * Dispatches 'messagesChanged' event.
+     * @param {string} text - Message content.
+     * @param {boolean} isUser - True if user message, false if bot.
+     * @returns {Object} The added message object.
+     */
     addMessage(text, isUser) {
         const message = {
             id: Date.now(),
@@ -31,15 +48,27 @@ export class Model {
         return message;
     }
 
-    // READ functions
+    /**
+     * READ: Returns a copy of all messages.
+     * @returns {Array<Object>} Immutable copy of messages array.
+     */
     getMessages() {
         return [...this.messages];  // Fixed: plural
     }
 
+    /**
+     * READ: Finds and returns a single message by ID.
+     * @param {number} id - Message ID.
+     * @returns {Object|null} The message or null if not found.
+     */
     getMessage(id) {
         return this.messages.find(msg => msg.id === parseInt(id));  // Fixed: plural
     }
 
+    /**
+     * READ: Returns stats object with count and lastSaved.
+     * @returns {Object} Stats { count: number, lastSaved: string }.
+     */
     getStats() {
         return {
             count: this.messages.length,  // Fixed: plural
@@ -47,7 +76,13 @@ export class Model {
         };
     }
 
-    // UPDATE allows user to update their message
+    /**
+     * UPDATE: Edits a user message if it exists.
+     * Marks as edited, updates timestamp, saves, dispatches event.
+     * @param {number} id - Message ID.
+     * @param {string} newText - Updated text.
+     * @returns {Object|null} Updated message or null if invalid.
+     */
     updateMessage(id, newText) {
         const msg = this.getMessage(id);
         if (!msg || !msg.isUser) return null; // message must exist and be from user
@@ -62,6 +97,11 @@ export class Model {
         return msg;
     }
 
+    /**
+     * DELETE: Removes a message by ID and saves.
+     * Dispatches 'messagesChanged' event.
+     * @param {number} id - Message ID to delete.
+     */
     deleteMessage(id) {
         this.messages = this.messages.filter(msg => msg.id !== parseInt(id));  // Fixed: !== to remove
         this.saveToStorage();
@@ -70,6 +110,9 @@ export class Model {
         document.dispatchEvent(new CustomEvent('messagesChanged', { detail: { messages: this.getMessages() } }));  // Fixed: standardize event
     }
 
+    /**
+     * DELETE: Clears all messages, resets lastSaved, saves, dispatches event.
+     */
     clearChat() {
         this.messages = [];  // Fixed: plural
         this.saveToStorage();
@@ -78,10 +121,20 @@ export class Model {
         document.dispatchEvent(new CustomEvent('messagesChanged', { detail: { messages: this.getMessages() } }));  // Fixed: standardize event
     }
 
+    /**
+     * Exports messages as formatted JSON string.
+     * @returns {string} JSON string of messages.
+     */
     exportJSON() {
         return JSON.stringify(this.messages, null, 2);  // Fixed: plural
     }
 
+    /**
+     * Imports messages from JSON string, validates array format.
+     * Updates timestamps/IDs if needed, saves, dispatches event.
+     * @param {string} jsonString - JSON string to parse.
+     * @returns {boolean} True if successful, false on error.
+     */
     importJSON(jsonString) {
         try {
             const imported = JSON.parse(jsonString);

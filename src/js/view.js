@@ -1,5 +1,13 @@
-// view.js - Renders UI (messages, stats, controls) - no data logic
+/**
+ * View module for rendering UI elements, handling DOM interactions for messages and controls.
+ * No data logic—purely presentational.
+ * @module view
+ */
+
 export class View {  // Fixed: Added export, capitalized 'View'
+    /**
+     * Constructor binds DOM elements by ID.
+     */
     constructor() {
         this.chatWindow = document.getElementById('chatWindow');
         this.messageBox = document.getElementById('messageBox');
@@ -10,6 +18,11 @@ export class View {  // Fixed: Added export, capitalized 'View'
         this.stats = document.getElementById('stats');
     }
 
+    /**
+     * Renders messages in chatWindow as <p> elements with classes and buttons.
+     * Scrolls to bottom.
+     * @param {Array<Object>} messages - Array of message objects.
+     */
     renderMessages(messages) {
         if (!this.chatWindow) return;  // Fixed: Null check
         this.chatWindow.innerHTML = '';
@@ -38,15 +51,29 @@ export class View {  // Fixed: Added export, capitalized 'View'
         this.chatWindow.scrollTop = this.chatWindow.scrollHeight;
     }
 
+    /**
+     * Updates stats element with count and lastSaved.
+     * @param {Object} stats - { count: number, lastSaved: string }.
+     */
     updateStats(stats) {
         if (!this.stats) return;  // Null check
         this.stats.textContent = `Messages: ${stats.count} | Last Saved: ${stats.lastSaved}`;
     }
 
+    /**
+     * Shows browser confirm dialog.
+     * @param {string} message - Confirmation text.
+     * @returns {boolean} True if confirmed.
+     */
     showConfirmation(message) {
         return confirm(message);
     }
 
+    /**
+     * Downloads data as JSON file via Blob URL.
+     * @param {string} filename - Download filename.
+     * @param {string} data - JSON string content.
+     */
     downloadJSON(filename, data) {
         const blob = new Blob([data], { type: 'application/json' });
         const url = URL.createObjectURL(blob);
@@ -57,6 +84,10 @@ export class View {  // Fixed: Added export, capitalized 'View'
         URL.revokeObjectURL(url);
     }
 
+    /**
+     * Triggers file input for JSON upload, calls callback with content.
+     * @param {Function} callback - (content: string) => void.
+     */
     getFileContent(callback) {
         const input = document.createElement('input');
         input.type = 'file';
@@ -72,6 +103,11 @@ export class View {  // Fixed: Added export, capitalized 'View'
         input.click();
     }
 
+    /**
+     * Extracts message ID from event target dataset.
+     * @param {Event} event - Click event on edit/delete button.
+     * @returns {string} Message ID.
+     */
     getMessageIdForEvent(event) {
         return event.target.dataset.messageId;
     }
