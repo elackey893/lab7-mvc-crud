@@ -25,7 +25,7 @@ export class DeepSeekService {
                 body: JSON.stringify({
                     model: 'deepseek/deepseek-chat-v3.1',
                     messages: [{ role: 'user', content: message }],
-                    max_tokens: 100
+                    max_tokens: 1000
                 })
             });
             if (!response.ok) {
