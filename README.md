@@ -27,7 +27,7 @@ Event-driven updates via custom `messagesChanged` events.
 
 For DeepSeek: Enter OpenRouter API key on first use (saved to localStorage).
 
-**Git Pages publish**: [Lab 7-8: MVC CRUD and AI](https://elackey893.github.io/lab7-mvc-crud/)
+**Netlify link publish**: [Lab 7-8: MVC CRUD and AI](https://glistening-marigold-bd892d.netlify.app/)
 
 
 ## Testing
